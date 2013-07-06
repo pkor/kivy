@@ -60,13 +60,13 @@ class WindowEglRpi(WindowBase):
         self.egl_info = (display, surface, context)
         egl.MakeCurrent(display, surface, surface, context)
 
-    
+
     def close(self):
         egl.Terminate(self.egl_info[0])
-    
+
     def flip(self):
         egl.SwapBuffers(self.egl_info[0], self.egl_info[1])
-    
+
     def _mainloop(self):
         EventLoop.idle()
 
@@ -74,7 +74,7 @@ class WindowEglRpi(WindowBase):
         while not EventLoop.quit and EventLoop.status == 'started':
             try:
                 self._mainloop()
-            except BaseException, inst:
+            except BaseException as inst:
                 raise
                 '''
                 # use exception manager first

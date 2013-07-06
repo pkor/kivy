@@ -107,6 +107,14 @@ class Sound(EventDispatcher):
     :data:`loop` is an :class:`~kivy.properties.BooleanProperty`, default to False.
     '''
 
+    loop = BooleanProperty(False)
+    '''Set to True if the sound should automatically loop when it finishes.
+
+    .. versionadded:: 1.8.0
+
+    :data:`loop` is an :class:`~kivy.properties.BooleanProperty`, default to False.
+    '''
+
     #
     # deprecated
     #

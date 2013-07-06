@@ -211,9 +211,12 @@ def determine_base_flags():
     elif platform == 'darwin':
         v = os.uname()
         if v[2] == '13.0.0':
-    	    sysroot = '/Applications/Xcode5-DP.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks'
+            sysroot = ('/Applications/Xcode5-DP.app/Contents/Developer/'
+                       'Platforms/MacOSX.platform/Developer/SDKs/'
+                       'MacOSX10.8.sdk/System/Library/Frameworks')
         else:
-            sysroot = '/System/Library/Frameworks/ApplicationServices.framework/Frameworks'
+            sysroot = ('/System/Library/Frameworks/ApplicationServices'
+                       '.framework/Frameworks')
         flags['extra_compile_args'] += ['-F%s' % sysroot]
         flags['extra_link_args'] += ['-F%s' % sysroot]
     return flags
@@ -456,7 +459,7 @@ setup(
     author='Kivy Crew',
     author_email='kivy-dev@googlegroups.com',
     url='http://kivy.org/',
-    license='MIT',
+    license='LGPL',
     description=(
         'A software library for rapid development of '
         'hardware-accelerated multitouch applications.'),
@@ -527,7 +530,8 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Information Technology',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: MIT License',
+        'License :: OSI Approved :: GNU Library or Lesser '
+        'General Public License (LGPL)',
         'Natural Language :: English',
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: Microsoft :: Windows',

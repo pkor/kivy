@@ -89,7 +89,7 @@ class FactoryBase(object):
         '''Unregisters the classnames previously registered via the
         register method. This allows the same classnames to be re-used in
         different contexts.
-        
+
         .. versionadded:: 1.7.1
         '''
         for classname in classnames:
@@ -129,7 +129,7 @@ class FactoryBase(object):
                 rootwidgets = []
                 for basecls in item['baseclasses'].split('+'):
                     rootwidgets.append(Factory.get(basecls))
-                cls = type(name, tuple(rootwidgets), {})
+                cls = item['cls'] = type(name, tuple(rootwidgets), {})
 
             else:
                 raise FactoryException('No information to create the class')
