@@ -263,6 +263,9 @@ class Bubble(GridLayout):
         if self_content not in self.children:
             Clock.schedule_once(self.on_arrow_pos)
             return
+        if self_content not in self.children:
+            Clock.schedule_once(self.on_arrow_pos)
+            return
 
         self_arrow_pos = self.arrow_pos
         if self._prev_arrow_pos == self_arrow_pos:

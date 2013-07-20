@@ -212,8 +212,8 @@ def determine_base_flags():
         v = os.uname()
         if v[2] == '13.0.0':
             sysroot = ('/Applications/Xcode5-DP.app/Contents/Developer/'
-                       'Platforms/MacOSX.platform/Developer/SDKs/'
-                       'MacOSX10.8.sdk/System/Library/Frameworks')
+                       'Platforms/MacOSX.platform/Developer/'
+                       'SDKs/MacOSX10.8.sdk/System/Library/Frameworks')
         else:
             sysroot = ('/System/Library/Frameworks/ApplicationServices'
                        '.framework/Frameworks')

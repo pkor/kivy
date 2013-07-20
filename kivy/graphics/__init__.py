@@ -32,12 +32,11 @@ the canvas object and will be used when the window is drawn.
 
 .. note::
 
-    Kivy drawing instructions are not automatically relative to the widgets
-    position or size. You therefore you need to consider these factors when
-    drawing. In order to make your drawing instructions relative to the widget,
-    the instructions need either to be
-    declared in the :mod:`KvLang <kivy.lang>` or bound to pos and size changes.
-    Please see :ref:`adding_widget_background` for more detail.
+    Drawing instructions are rendered directly by the OpenGL layer,
+    which means they do not automatically redraw when your widget moves. In
+    order to achieve this, the instructions need either to be declared in the
+    :mod:`KvLang <kivy.lang>` or bound to pos and size changes. Please see
+    :ref:`adding_widget_background` for more detail.
 
 GL Reloading mechanism
 ----------------------

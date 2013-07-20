@@ -18,6 +18,7 @@ You can compile it with::
         --window --version 1.0 debug installd
 
 '''
+>>>>>>> upstream/master
 
 
 import kivy
