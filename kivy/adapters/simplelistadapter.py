@@ -24,8 +24,8 @@ from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 
 
-class SimpleListAdapter(EventDispatcher):
-    '''A :class:`~kivy.adapters.simplelistadapter.SimpleListAdapter` is an
+class SimpleListAdapter(Adapter):
+    ''':class:`~kivy.adapters.simplelistadapter.SimpleListAdapter` is an
     adapter around a Python list.
 
     From :class:`~kivy.adapters.adapter.Adapter`, the

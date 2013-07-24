@@ -234,6 +234,18 @@ Here is a simple example of how on_pause() should be used::
          # Here you can check if any data needs replacing (usually nothing)
          pass
 
+Here is a simple example of how on_pause() should be used::
+
+   class TestApp(App):
+
+      def on_pause(self):
+         # Here you can save data if needed
+         return True
+
+      def on_resume(self):
+         # Here you can check if any data needs replacing (usually nothing)
+         pass
+
 .. warning::
 
     Both `on_pause` and `on_stop` must save important data, because after
