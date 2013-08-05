@@ -291,9 +291,13 @@ class Inspector(FloatLayout):
         else:
             button.text = 'Move to Bottom'
             if self.widget_info:
-                Animation(top=self.height, t='out_quad', d=.3).start(self.layout)
+                Animation(top=self.height,
+                          t='out_quad',
+                          d=.3).start(self.layout)
             else:
-                Animation(y=self.height - 60, t='out_quad', d=.3).start(self.layout)
+                Animation(y=self.height - 60,
+                          t='out_quad',
+                          d=.3).start(self.layout)
 
             bottom_bar = self.layout.children[1]
             self.layout.remove_widget(bottom_bar)
@@ -328,9 +332,13 @@ class Inspector(FloatLayout):
             self.win.add_widget(self)
             Logger.info('Inspector: inspector activated')
             if self.at_bottom:
-                Animation(top=60, t='out_quad', d=.3).start(self.layout)
+                Animation(top=60,
+                          t='out_quad',
+                          d=.3).start(self.layout)
             else:
-                Animation(y=self.height - 60, t='out_quad', d=.3).start(self.layout)
+                Animation(y=self.height - 60,
+                          t='out_quad',
+                          d=.3).start(self.layout)
 
     def animation_close(self, instance, value):
         if self.activated is False:

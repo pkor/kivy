@@ -1,5 +1,5 @@
 #
-# Bug fixed: 
+# Bug fixed:
 # - put utf-8 in string, and validate -> no more crash due to str() encoding
 # - put utf-8 in string, validate, close, open the app and edit the value -> no
 # more weird space due to ascii->utf8 encoding.
@@ -29,6 +29,7 @@ data = '''
     }
 ]
 '''
+
 
 class UnicodeIssueSetting(App):
     def build_config(self, config):

@@ -87,7 +87,8 @@ class KineticEffect(EventDispatcher):
 
     def __init__(self, **kwargs):
         self.history = []
-        self.trigger_velocity_update = Clock.create_trigger(self.update_velocity, 0)
+        self.trigger_velocity_update = \
+                Clock.create_trigger(self.update_velocity, 0)
         super(KineticEffect, self).__init__(**kwargs)
 
     def apply_distance(self, distance):

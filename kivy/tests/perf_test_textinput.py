@@ -85,8 +85,9 @@ class PerfApp(App, FloatLayout):
                 print('deleted 210 characters 9 times')
                 import resource
                 print('mem usage after test')
-                print(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss\
-                    / 1024, 'MB')
+                print(resource.getrusage(
+                        resource.RUSAGE_SELF).ru_maxrss / 1024,
+                        'MB')
                 print('total lines in text input:', m_len)
                 print('--------------------------------------')
                 print('total time elapsed:', self.tot_time)
@@ -120,8 +121,9 @@ class PerfApp(App, FloatLayout):
                     round((m_len - len_text) / len_text), 'times')
                 import resource
                 print('mem usage after test')
-                print(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss\
-                    / 1024, 'MB')
+                print(resource.getrusage(
+                    resource.RUSAGE_SELF).ru_maxrss / 1024,
+                    'MB')
                 print('total lines in text input:', m_len)
                 print('--------------------------------------')
                 print('total time elapsed:', self.tot_time)
@@ -145,8 +147,9 @@ class PerfApp(App, FloatLayout):
                 print('Done!')
                 import resource
                 print('mem usage after test')
-                print(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss\
-                    / 1024, 'MB')
+                print(resource.getrusage(
+                    resource.RUSAGE_SELF).ru_maxrss / 1024,
+                    'MB')
                 print('--------------------------------------')
                 print('total time elapsed:', self.tot_time)
                 print('--------------------------------------')

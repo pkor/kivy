@@ -103,7 +103,8 @@ class UrlRequest(Thread):
         `on_redirect`: callback(request, result)
             Callback function to call if the server returns a Redirect
         `on_failure`: callback(request, result)
-            Callback function to call if the server returns a Client Error or Server Error
+            Callback function to call if the server returns a Client Error or
+            Server Error
         `on_error`: callback(request, error)
             Callback function to call when an error happen
         `on_progress`: callback(request, current_size, total_size)
@@ -132,8 +133,8 @@ class UrlRequest(Thread):
             If True, it will use the Logger.debug to print information about url
             access/progression/error.
         `file_path`: str, default to None
-            If set, the result of the UrlRequest will be written to this path instead
-            of in memory.
+            If set, the result of the UrlRequest will be written to this path
+            instead of in memory.
 
     .. versionadded:: 1.8.0
         Parameter `decode` added.

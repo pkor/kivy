@@ -58,8 +58,9 @@ class Adapter(EventDispatcher):
         mixin. Now adapters have to choose whether or not to mix it in. In a
         related move, cached_views and related code were moved from ListAdapter
         to this base class. This is what adapters do -- they create and cache
-        views in a kind of helper system for collection style views. In contrast,
-        traditional controllers do not perform this role, and are simpler.
+        views in a kind of helper system for collection style views. In
+        contrast, traditional controllers do not perform this role, and are
+        simpler.
 
         create_view() now handles additional arguments that may come from
         get_data_item(), specifically for the dictionary key added to the args

@@ -44,7 +44,6 @@ class ButtonBehavior(object):
     :data:`state` is an :class:`~kivy.properties.OptionProperty`.
     '''
 
-
     def __init__(self, **kwargs):
         self.register_event_type('on_press')
         self.register_event_type('on_release')
@@ -104,13 +103,15 @@ class ButtonBehavior(object):
 
         .. versionadded:: 1.8.0
         '''
+
         self._do_press()
         self.dispatch('on_press')
+
         def trigger_release(dt):
             self._do_release()
             self.dispatch('on_release')
+
         if not duration:
             trigger_release(0)
         else:
             Clock.schedule_once(trigger_release, duration)
-

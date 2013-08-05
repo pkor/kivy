@@ -729,7 +729,7 @@ class ScreenManager(FloatLayout):
             return screens[index].name
         except ValueError:
             return
-        
+
     def next(self):
         ''' Py2K backwards compatability without six or other lib'''
         return self.__next__()

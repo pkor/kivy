@@ -61,7 +61,9 @@ You can check the `examples/widgets/boxlayout_poshint.py` for a live example.
 __all__ = ('BoxLayout', )
 
 from kivy.uix.layout import Layout
-from kivy.properties import NumericProperty, OptionProperty, VariableListProperty
+from kivy.properties import NumericProperty
+from kivy.properties import OptionProperty
+from kivy.properties import VariableListProperty
 
 
 class BoxLayout(Layout):

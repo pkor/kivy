@@ -58,7 +58,7 @@ import sys
 
 def upload(ffile, project_name, user_name, password, summary, labels=None):
     """Upload a file to a Google Code project's file server.
-  
+
     Args:
         file: The local path to the file.
         project_name: The name of your project on Google Code.
@@ -88,12 +88,10 @@ def upload(ffile, project_name, user_name, password, summary, labels=None):
 
     upload_host = '%s.googlecode.com' % project_name
     upload_uri = '/files'
-    auth_token = base64.b64encode('%s:%s'% (user_name, password))
-    headers = {
-               'Authorization': 'Basic %s' % auth_token,
+    auth_token = base64.b64encode('%s:%s' % (user_name, password))
+    headers = {'Authorization': 'Basic %s' % auth_token,
                'User-Agent': 'Googlecode.com uploader v0.9.4',
-               'Content-Type': content_type,
-               }
+               'Content-Type': content_type}
 
     server = httplib.HTTPSConnection(upload_host)
     server.request('POST', upload_uri, body, headers)
@@ -123,13 +121,10 @@ def encode_upload_request(fields, file_path):
 
     # Add the metadata about the upload first
     for key, value in fields:
-        body.extend(
-                    ['--' + BOUNDARY,
+        body.extend(['--' + BOUNDARY,
                      'Content-Disposition: form-data; name="%s"' % key,
                      '',
-                     value,
-                     ]
-                    )
+                     value])
 
     # Now add the file itself
     file_name = os.path.basename(file_path)
@@ -138,14 +133,13 @@ def encode_upload_request(fields, file_path):
     f.close()
 
     body.extend(
-                ['--' + BOUNDARY,
-                 'Content-Disposition: form-data; name="filename"; filename="%s"' % file_name,
-                 # The upload server determines the mime-type, no need to set it.
-                 'Content-Type: application/octet-stream',
-                 '',
-                 file_content,
-                 ]
-                )
+            ['--' + BOUNDARY,
+             'Content-Disposition: form-data; name="filename"; filename="%s"'
+                 % file_name,
+             # The upload server determines the mime-type, no need to set it.
+             'Content-Type: application/octet-stream',
+             '',
+             file_content])
 
     # Finalize the form body
     body.extend(['--' + BOUNDARY + '--', ''])
@@ -155,7 +149,8 @@ def encode_upload_request(fields, file_path):
 
 def upload_find_auth(file_path, project_name, summary, labels=None,
                      user_name=None, password=None, tries=3):
-    """Find credentials and upload a file to a Google Code project's file server.
+    """Find credentials and upload a file to a Google Code project's file
+    server.
 
     file_path, project_name, summary, and labels are passed as-is to upload.
 
@@ -164,7 +159,7 @@ def upload_find_auth(file_path, project_name, summary, labels=None,
         project_name: The name of your project on Google Code.
         summary: A small description for the file.
         labels: an optional list of label strings with which to tag the file.
-        config_dir: Path to Subversion configuration directory, 'none', or None.
+        config_dir: Path to Subversion config directory, 'none', or None.
         user_name: Your Google account name.
         tries: How many attempts to make.
     """
@@ -185,15 +180,18 @@ def upload_find_auth(file_path, project_name, summary, labels=None,
             sys.stdout.flush()
             user_name = sys.stdin.readline().rstrip()
         if password is None:
-            # Read password if not loaded from svn config, or on subsequent tries.
+            # Read password if not loaded from svn config, or on subsequent
+            # tries.
             print('Please enter your googlecode.com password.')
             print('** Note that this is NOT your Gmail account password! **')
-            print('It is the password you use to access Subversion repositories,')
-            print('and can be found here: http://code.google.com/hosting/settings')
+            print('It is the password you use '
+                  'to access Subversion repositories,')
+            print('and can be found here: '
+                  'http://code.google.com/hosting/settings')
             password = getpass.getpass()
 
-        status, reason, url = upload(file_path, project_name, user_name, password,
-                                     summary, labels)
+        status, reason, url = upload(
+                file_path, project_name, user_name, password, summary, labels)
         # Returns 403 Forbidden instead of 401 Unauthorized for bad
         # credentials as of 2007-07-17.
         if status in [httplib.FORBIDDEN, httplib.UNAUTHORIZED]:

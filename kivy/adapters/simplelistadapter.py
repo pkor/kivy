@@ -30,7 +30,7 @@ from kivy.lang import Builder
 
 
 class SimpleListAdapter(Adapter):
-    ''':class:`~kivy.adapters.simplelistadapter.SimpleListAdapter` is an
+    '''A :class:`~kivy.adapters.simplelistadapter.SimpleListAdapter` is an
     adapter around a Python list.
 
     From :class:`~kivy.adapters.adapter.Adapter`, the

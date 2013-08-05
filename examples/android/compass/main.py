@@ -16,7 +16,7 @@ You can compile it with::
     ./build.py --package org.test.compass --name compass \
         --private ~/code/kivy/examples/android/compass \
         --window --version 1.0 debug installd
-
+ 
 '''
 
 

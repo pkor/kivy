@@ -130,7 +130,7 @@ def load(extname, version):
         searchpath = [bestpath]
     else:
         # Didn't find a matching extension
-        raise ImportError("No extension found that satisfies your criteria: "\
+        raise ImportError("No extension found that satisfies your criteria: "
                           + "('%s', %s)" % (extname, version))
 
     file, pathname, desc = imp.find_module(extname, searchpath)

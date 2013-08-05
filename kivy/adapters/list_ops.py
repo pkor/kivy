@@ -71,7 +71,7 @@ class AdapterListOpHandler(ListOpHandler):
 
         Logger.debug(
             'ListAdapter: OOL data_changed callback, {0}, {1}, {2}'.format(
-                  op_info.op_name, op_info.start_index, op_info.end_index))
+                op_info.op_name, op_info.start_index, op_info.end_index))
 
         op = op_info.op_name
         start_index = op_info.start_index

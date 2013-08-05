@@ -159,7 +159,8 @@ the value can use the values of other properties using reserved keywords.
         arguments passed to the callback.::
 
             TextInput:
-                on_focus: self.insert_text("I'm focused!") if args[1] else self.insert_text("I'm not focused.")
+                on_focus: self.insert_text("I'm focused!") \
+                        if args[1] else self.insert_text("I'm not focused.")
 
 Furthermore, if a class definition contains an id, you can use it as a
 keyword::
@@ -285,7 +286,7 @@ subclasses.
 The syntax look like:
 
 .. code-block:: kv
-     
+
     # Simple inheritance
     <NewWidget@Button>:
         ...
@@ -481,7 +482,7 @@ When you are creating a context:
     #. you cannot use references other than "root":
 
     .. code-block:: kv
-    
+
         <MyRule>:
             Widget:
                 id: mywidget
@@ -492,7 +493,7 @@ When you are creating a context:
     #. all the dynamic part will be not understood:
 
     .. code-block:: kv
-    
+
         <MyRule>:
             Template:
                 ctxkey: 'value 1' if root.prop1 else 'value2' # << even if
@@ -627,7 +628,6 @@ from kivy.cache import Cache
 from kivy import kivy_data_dir, require
 from kivy.compat import PY2, iteritems, iterkeys
 import kivy.metrics as Metrics
-from weakref import ref, proxy
 
 
 trace = Logger.trace
@@ -643,6 +643,7 @@ Cache.register('kv.lang')
 lang_str = re.compile('([\'"][^\'"]*[\'"])')
 lang_key = re.compile('([a-zA-Z_]+)')
 lang_keyvalue = re.compile('([a-zA-Z_][a-zA-Z0-9_.]*\.[a-zA-Z0-9_.]+)')
+lang_tr = re.compile('(_\()')
 
 # delayed calls are canvas expression triggered during an loop
 _delayed_calls = []
@@ -796,6 +797,11 @@ class ParserRuleProperty(object):
         wk = list(set(findall(lang_keyvalue, tmp)))
         if len(wk):
             self.watched_keys = [x.split('.') for x in wk]
+        if findall(lang_tr, tmp):
+            if self.watched_keys:
+                self.watched_keys += [['_']]
+            else:
+                self.watched_keys = [['_']]
 
     def __repr__(self):
         return '<ParserRuleProperty name=%r filename=%s:%d ' \
@@ -1221,9 +1227,17 @@ class Parser(object):
         return objects, []
 
 
+def get_proxy(widget):
+    try:
+        return widget.proxy_ref
+    except AttributeError:
+        return widget
+
+
 def custom_callback(__kvlang__, idmap, *largs, **kwargs):
     idmap['args'] = largs
     exec(__kvlang__.co_value, idmap)
+
 
 def create_handler(iself, element, key, value, rule, idmap, delayed=False):
     locals()['__kvlang__'] = rule
@@ -1261,7 +1275,8 @@ def create_handler(iself, element, key, value, rule, idmap, delayed=False):
                     f = getattr(f, x)
                 if hasattr(f, 'bind'):
                     f.bind(**{k[-1]: fn})
-                    _handlers[uid].append([f, k[-1], fn])
+                    # make sure _handlers doesn't keep widgets alive
+                    _handlers[uid].append([get_proxy(f), k[-1], fn])
             except KeyError:
                 continue
             except AttributeError:
@@ -1453,7 +1468,11 @@ class BuilderBase(object):
             cls = type(name, tuple(rootwidgets), {})
             Cache.append('kv.lang', key, cls)
         widget = cls()
-        self._apply_rule(widget, rule, rule, template_ctx=ctx)
+        # in previous versions, ``ctx`` is passed as is as ``template_ctx``
+        # preventing widgets in it from be collected by the GC. This was
+        # especially relevant to AccordionItem's title_template.
+        proxy_ctx = {k: get_proxy(v) for k, v in ctx.items()}
+        self._apply_rule(widget, rule, rule, template_ctx=proxy_ctx)
         return widget
 
     def apply(self, widget):
@@ -1575,9 +1594,11 @@ class BuilderBase(object):
 
         # append the properties and handlers to our final resolution task
         if rule.properties:
-            rctx['set'].append((widget.proxy_ref, list(rule.properties.values())))
+            rctx['set'].append((widget.proxy_ref,
+                                list(rule.properties.values())))
         if rule.handlers:
-            rctx['hdl'].append((widget.proxy_ref, rule.handlers))
+            rctx['hdl'].append((widget.proxy_ref,
+                                rule.handlers))
 
         # if we are applying another rule that the root one, then it's done for
         # us!
@@ -1698,7 +1719,8 @@ class BuilderBase(object):
                     value = prule.co_value
                     if type(value) is CodeType:
                         value = create_handler(
-                            widget, instr.proxy_ref, key, value, prule, idmap, True)
+                            widget, instr.proxy_ref,
+                            key, value, prule, idmap, True)
                     setattr(instr, key, value)
             except Exception as e:
                 raise BuilderException(prule.ctx, prule.line,

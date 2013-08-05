@@ -411,9 +411,11 @@ class FileChooserController(FloatLayout):
         filtered = []
         for filter in self.filters:
             if isinstance(filter, collections.Callable):
-                filtered.extend([fn for fn in files if list(filter(self.path, fn))])
+                filtered.extend(
+                        [fn for fn in files if list(filter(self.path, fn))])
             else:
-                filtered.extend([fn for fn in files if fnmatch(fn, filter)])
+                filtered.extend(
+                        [fn for fn in files if fnmatch(fn, filter)])
         if not self.filter_dirs:
             dirs = [fn for fn in files if isdir(fn)]
             filtered.extend(dirs)

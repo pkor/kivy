@@ -365,7 +365,6 @@ class Accordion(Widget):
             pos=self._trigger_layout,
             min_space=self._trigger_layout)
 
-
     def add_widget(self, widget, *largs):
         if not isinstance(widget, AccordionItem):
             raise AccordionException('Accordion accept only AccordionItem')

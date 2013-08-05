@@ -174,6 +174,7 @@ __all__ = ('Property',
 include "graphics/config.pxi"
 
 from weakref import ref
+from kivy.compat import string_types
 
 from kivy.compat import string_types
 from kivy.logger import Logger

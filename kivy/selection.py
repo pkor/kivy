@@ -405,7 +405,8 @@ class Selection(EventDispatcher):
             self.selection.append(item)
 
     def select_list(self, selectable_items, extend=True):
-        '''The select call is made for the items in the provided selectable_items.
+        '''The select call is made for the items in the provided
+        selectable_items.
 
         Arguments:
 
